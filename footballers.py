@@ -20,4 +20,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="footballers")
     parser.add_argument("team_id")
     args = parser.parse_args()
-    print(get_completion_count(args.team_id))
+    print(f"{args.team_id} has {get_completion_count(args.team_id)} completions")
