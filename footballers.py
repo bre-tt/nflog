@@ -22,12 +22,24 @@ def get_incompletion_count(team_id):
     #print(f"The number of times IsPass is 1 when OffenseTeam is KC is: {count}")
     #print(f"The number of completed passes for Kansas City on offense is {kc_completion_count}")
 
-def get_oformation_count(team_id):
+def get_shotgun_count(team_id):
     
     team_df = df[df['OffenseTeam'] == team_id]
     #shotgun_count = df(['Formation'] == "SHOTGUN")
     team_shotgun_count = team_df['Formation'].apply(lambda x: str(x).upper().split().count('SHOTGUN') if isinstance(x, str) else 0).sum()
     return team_shotgun_count
+
+def get_rushing_count(team_id):
+
+    team_df =df[df['OffenseTeam'] == team_id]
+    team_rush_count = team_df['PlayType'].apply(lambda x: str(x).upper().split().count('RUSH') if isinstance(x, str) else 0).sum()
+    return team_rush_count
+
+def get_penalty_count(team_id):
+
+    team_df =df[df['OffenseTeam'] == team_id]
+    team_penalty_count = team_df['IsPenalty'].sum()
+    return team_penalty_count
 
 
 if __name__ == "__main__": 
@@ -37,5 +49,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(f"{args.team_id} has {get_completion_count(args.team_id)} completions")
     print(f"{args.team_id} has {get_incompletion_count(args.team_id)} incompletions")
-    print(f"{args.team_id} has {get_oformation_count(args.team_id)} SHOTGUN formations")
-
+    print(f"{args.team_id} has {get_shotgun_count(args.team_id)} SHOTGUN formations")
+    print(f"{args.team_id} has {get_rushing_count(args.team_id)} RUSH plays")
+    print(f"{args.team_id} has {get_penalty_count(args.team_id)} penalties")
